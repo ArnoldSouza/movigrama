@@ -12,7 +12,7 @@ from bokeh.models import (HoverTool,  # present details in the plot
                           DatetimeTickFormatter)  # format datetime axis
 
 import pandas as pd  # manage dataframe
-from bokeh.io import show, output_file  # bokeh imports
+from bokeh.io import show, output_file, reset_output  # bokeh imports
 from bokeh.plotting import figure  # bokeh imports
 
 
@@ -22,6 +22,9 @@ def assembly_chart(df, complements):
 
     # specify the output file name
     output_file("movigrama_chart.html")
+    # force to show only one plot when multiples executions of the code occur
+    # otherwise the plots will append each time one new calling is done
+    reset_output()
 
     # create ColumnDataSource objects directly from Pandas data frames
     source = ColumnDataSource(df)
