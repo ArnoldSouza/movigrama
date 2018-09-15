@@ -5,6 +5,7 @@ Created on Fri May 18 16:54:03 2018
 @author: Arnold
 """
 
+import configparser  # lib to read config.ini files
 import pyodbc  # module to establish SQL connection
 from threading import Thread  # threading module for cursor animation
 from time import sleep  # necessary for cursor animation
@@ -15,26 +16,18 @@ import pandas as pd  # manage dataframe
 # e.g. print(Fore.YELLOW + 'some message')
 
 
-def connect():
+def connect(config_file, section):
     """global connection factory"""
-    Server = input('Server host (db.domain.com): ')
-    Database = input('Defalt Database: ')
-    uid = input('user identification: ')
-    pwd = input('password: ')
+    config = configparser.ConfigParser()
+    config.read(config_file)  # get values from INI File
+
+    Server = config[section]['server']  # assign server name
+    Database = config[section]['database']  # assign db name
+    uid = config[section]['uid']  # assign user name
+    pwd = config[section]['pwd']  # assign password
 
     print('connecting to server...')
-    con_string = 'Driver={SQL Server};Server=' + Server + ';Database=' + Database + ';uid=' + uid + ';pwd=' + pwd
-    conn = pyodbc.connect(con_string)
-    print('connection established')
-    return conn
-
-
-
-    """global connection factory"""
-	
-    print('connecting to server...')
-    con_string = 'Driver={SQL Server};Server=db.endiconpa.com;\
-    Database=PROTHEUS;uid=PROTHEUS;pwd=TOTVS'
+    con_string = 'Driver={SQL Server};Server=' + Server + ';Database=' + Database + ';uid=' + uid + ';pwd=' + pwd  # analysis:ignore
     conn = pyodbc.connect(con_string)
     print('connection established')
     return conn

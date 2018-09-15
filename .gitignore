@@ -58,3 +58,7 @@ docs/_build/
 target/
 
 movigrama_chart\.html
+
+dados\.pkl
+
+/app_config.ini
