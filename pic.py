@@ -9,6 +9,7 @@ Created on Thu May 10 20:11:27 2018
 from bokeh.models import (HoverTool,  # present details in the plot
                           ColumnDataSource,  # specify source
                           Title,  # add title and subtitles
+                          Span,  # add horizontal line
                           DatetimeTickFormatter)  # format datetime axis
 
 import pandas as pd  # manage dataframe
@@ -45,7 +46,7 @@ def assembly_chart(df, complements):
                 top='STOCK',
                 width=pd.Timedelta(days=1),
                 fill_alpha=0.4,
-                color='#99d8c9',
+                color='paleturquoise',
                 source=source)
 
     # build the OUT bar
@@ -91,6 +92,13 @@ def assembly_chart(df, complements):
                        text_alpha=0.9,
                        align='center',
                        text_font_style="bold"), 'above')
+    # adds horizontal line
+    hline = Span(location=0,
+                 line_alpha=0.4,
+                 dimension='width',
+                 line_color='gray',
+                 line_width=3)
+    p.renderers.extend([hline])
 
     # adapt the range to the plot
     p.x_range.range_padding = 0.1
