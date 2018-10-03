@@ -10,6 +10,7 @@ Created on Mon May 14 11:32:47 2018
 import pic  # import plot module
 import funcs as fc  # import functions module
 import time  # manage elapsed time
+import pickle  # used to save objects
 
 while True:
     print('●'*79)  # line delimiter
@@ -52,6 +53,7 @@ while True:
 
     # save the dataframe into pickle file
     df.to_pickle('dados.pkl')
+    pickle.dump(complements, open("complements.pkl", "wb"))
 
     # function to plot the graph
     pic.assembly_chart(df, complements)
