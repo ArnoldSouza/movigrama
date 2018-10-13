@@ -406,6 +406,7 @@ def assembly_chart(df, complements):
     p2.axis.minor_tick_line_color = 'gray'
 
     # iniciate hover object
+    # TODO develop hoverTool
 #    hover = HoverTool()
 #    hover.mode = "vline"  # activate hover by vertical line
 #    hover.tooltips = [("SUM-IN", "@SOMA_ENTRA"),
