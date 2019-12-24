@@ -13,7 +13,7 @@ from bokeh.models import (HoverTool,  # present details in the plot
                           Band,  # create a band inside the chart
                           FactorRange,  # create factors to colorize
                           LabelSet,  # used to compound label
-                          BoxAnnotation,  # used in shadding
+                          BoxAnnotation,  # used in shading
                           DatetimeTickFormatter)  # format datetime axis
 from bokeh.palettes import Category20_20  # used in factor mapping
 from bokeh.transform import factor_cmap  # used in factor mapping
@@ -150,7 +150,7 @@ def assembly_chart(df, complements):
                 months=['%m/%Y'],
                 years=['%Y'])
 
-    # iniciate hover object
+    # initiate hover object
     hover = HoverTool()
     hover.mode = "vline"  # activate hover by vertical line
     hover.tooltips = [("SUM-IN", "@SOMA_ENTRA"),
@@ -161,7 +161,7 @@ def assembly_chart(df, complements):
                       ("DT", "@DT{%d/%m/%Y}")]
     # use 'datetime' formatter for 'DT' field
     hover.formatters = {"DT": 'datetime'}
-    hover.renderers = [r1]  # display tolltip only to one render
+    hover.renderers = [r1]  # display tooltip only to one render
     p.add_tools(hover)
 
     ###########################################################################
@@ -255,7 +255,7 @@ def assembly_chart(df, complements):
                                                months=['%m/%Y'],
                                                years=['%Y'])
 
-    # iniciate hover object
+    # initiate hover object
     hover = HoverTool()
     hover.mode = "vline"  # activate hover by vertical line
     hover.tooltips = [("DEMAND", '@out_invert'),
@@ -265,12 +265,12 @@ def assembly_chart(df, complements):
                       ("DT", "@DT{%d/%m/%Y}")]
     # use 'datetime' formatter for 'DT' field
     hover.formatters = {"DT": 'datetime'}
-    hover.renderers = [r1]  # display tolltip only to one render
+    hover.renderers = [r1]  # display tooltip only to one render
     p1.add_tools(hover)
 
     ###########################################################################
     #
-    #  Demand groupped by month
+    #  Demand grouped by month
     #
     ###########################################################################
 
@@ -405,7 +405,7 @@ def assembly_chart(df, complements):
     p2.axis.minor_tick_out = 6
     p2.axis.minor_tick_line_color = 'gray'
 
-    # iniciate hover object
+    # initiate hover object
     # TODO develop hoverTool
 #    hover = HoverTool()
 #    hover.mode = "vline"  # activate hover by vertical line
@@ -414,7 +414,7 @@ def assembly_chart(df, complements):
 #                      ("COUNT-IN", "@TRANSACT_ENTRA"),
 #                      ("COUNT-OUT", "@TRANSACT_SAI"),
 #                      ("STOCK", "@STOCK")]
-#    hover.renderers = [r1]  # display tolltip only to one render
+#    hover.renderers = [r1]  # display tooltip only to one render
 #    p2.add_tools(hover)
 
     ###########################################################################

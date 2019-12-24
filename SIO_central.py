@@ -23,7 +23,7 @@ while True:
 
     # get inicial time
     start_time = time.time()
-    print('starting aplication at: {}h local'
+    print('starting application at: {}h local'
           .format(time.strftime("%H:%M:%S", time.localtime(start_time))),
           end='\n'*2)
 
@@ -61,4 +61,5 @@ while True:
     # end of application
     elapsed_time = time.time() - start_time
     print('\n', 'application finished (hh:mm:ss): {}'
-          .format(time.strftime("%H:%M:%S", time.gmtime(elapsed_time))), sep='', end='\n'+'-'*79+'\n'*2)  # analysis:ignore
+          .format(time.strftime("%H:%M:%S", time.gmtime(elapsed_time))), sep='', end='\n'+'-'*79+'\n'*2)  # analysis
+    # :ignore

@@ -27,7 +27,8 @@ def connect(config_file, section):
     pwd = config[section]['pwd']  # assign password
 
     print('connecting to server...')
-    con_string = 'Driver={SQL Server};Server=' + Server + ';Database=' + Database + ';uid=' + uid + ';pwd=' + pwd  # analysis:ignore
+    con_string = 'Driver={SQL Server};Server=' + Server + ';Database=' + Database + ';uid=' + uid + ';pwd=' + pwd  #
+    # analysis:ignore
     conn = pyodbc.connect(con_string)
     print('connection established')
     return conn
@@ -215,7 +216,7 @@ def get_complements(conn, parameters, *args):
 def cumulative_inverse_sum(df, last_stock):
     """calculate the stock of the past days given
     the current stock level and add it to dataframe"""
-    # calculate the cumulative sum of moviments
+    # calculate the cumulative sum of movements
     cumulative_sum = (df.SOMA_ENTRA + df.SOMA_SAI).cumsum()
     # Subtract the diference of the stock variation between the
     # actual stock (last_stock)and the last value of stock from
