@@ -10,26 +10,54 @@ import pyodbc  # module to establish SQL connection
 from threading import Thread  # threading module for cursor animation
 from time import sleep  # necessary for cursor animation
 import pandas as pd  # manage dataframe
+import sys  # necessary to check in which os is python is running
+
 # from colorama import init, Fore  # colors to Windows Command Prompt
 
 # init(autoreset=True)  # inicialize Windows Command Prompt
 # e.g. print(Fore.YELLOW + 'some message')
 
 
-def connect(config_file, section):
+def connect(config_file):
     """global connection factory"""
+    section = None  # declare the variable without assign value to it
+
     config = configparser.ConfigParser()
     config.read(config_file)  # get values from INI File
 
-    Server = config[section]['server']  # assign server name
-    Database = config[section]['database']  # assign db name
-    uid = config[section]['uid']  # assign user name
-    pwd = config[section]['pwd']  # assign password
+    # check in which version of os python is running
+    if sys.platform == 'win32':
+        section = 'ERP_SERVER'
+    elif sys.platform == 'darwin':
+        section = 'ERP_SERVER_MAC_OS'
+    else:
+        print('this os is not supported by this application')
+        quit()
 
-    print('connecting to server...')
-    con_string = 'Driver={SQL Server};Server=' + Server + ';Database=' + Database + ';uid=' + uid + ';pwd=' + pwd  #
-    # analysis:ignore
-    conn = pyodbc.connect(con_string)
+    # this section was created so that the script could handle the odbc connection to SQL Server in a unix based
+    # system, like MAC OS
+    if section == 'ERP_SERVER_MAC_OS':
+        print('connecting to server...')
+        conn = pyodbc.connect(
+            server=config[section]['server'],  # assign server name
+            database=config[section]['database'],  # assign db name
+            user=config[section]['user'],  # assign user name
+            tds_version=config['ERP_SERVER_MAC_OS']['tds_version'],  # version of TDS protocol
+            password=config[section]['password'],  # assign password
+            port=config['ERP_SERVER_MAC_OS']['port'],  # the port used by the server side of the connection
+            #  where the ODBC driver is placed in MAC OS. You should follow the steps present in the link bellow
+            #  https://github.com/mkleehammer/pyodbc/wiki/Connecting-to-SQL-Server-from-Mac-OSX
+            driver=config['ERP_SERVER_MAC_OS']['driver']
+        )
+    else:
+        Server = config[section]['server']  # assign server name
+        Database = config[section]['database']  # assign db name
+        uid = config[section]['uid']  # assign user name
+        pwd = config[section]['pwd']  # assign password
+        con_string = 'Driver={SQL Server};Server=' + Server + ';Database=' + Database + ';uid=' + uid + ';pwd=' + pwd
+        print('connecting to server...')
+        conn = pyodbc.connect(con_string)
+
     print('connection established')
     return conn
 
@@ -47,8 +75,8 @@ def read_sql_file(file):
 def fetch_data(sqlScrpt, conn, action=False):
     """get data from the SQL server and pass the result as a dataframe"""
     print('fetching data...')
+    animation = CursorAnimation()  # Load Cursor
     if action is True:
-        animation = CursorAnimation()  # Load Cursor
         animation.start()  # Start Animation
     df = pd.read_sql(sqlScrpt, conn)  # fetch data from server
     conn.commit()  # confirm or rollback any changes made to the database
@@ -75,6 +103,7 @@ def get_data(conn, sqlScrpt):
 # stackoverflow.com/questions/7039114/waiting-animation-in-command-prompt-python
 class CursorAnimation(Thread):
     """Cursor animation taken from stackoverflow"""
+
     def __init__(self):
         self.flag = True
         self.animation_char = "|/-\\"
@@ -99,7 +128,7 @@ class CursorAnimation(Thread):
 def get_params(*args):
     """get variables parameters to a SQL Script"""
     param = {}
-    print('-'*79)  # line delimiter
+    print('-' * 79)  # line delimiter
     for arg in args:
         if arg == 'filial':
             answer = get_input(msg='Insert subsidiary code:',
@@ -122,8 +151,8 @@ def get_params(*args):
                                type_val='numeric',
                                convert='int',
                                defalt='365')
-            param[arg] = answer*-1
-    print('\n', '-'*79, '\n', sep='')  # line delimiter
+            param[arg] = answer * -1
+    print('\n', '-' * 79, '\n', sep='')  # line delimiter
     return param
 
 

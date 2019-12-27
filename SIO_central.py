@@ -33,7 +33,7 @@ while True:
     sqlFile = sqlFile.format(**parameters)
 
     # open database connection
-    conn = fc.connect('app_config.ini', 'ERP_SERVER')
+    conn = fc.connect('app_config.ini')
 
     # query the database server
     df = fc.fetch_data(sqlFile, conn, action=False)  # TODO remember change action # analysis:ignore

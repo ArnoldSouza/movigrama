@@ -68,3 +68,19 @@ SIO_central\.html
 complements\.pkl
 
 test\.py
+.idea/.gitignore
+.idea/copyright/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/dataSources/
+.idea/dictionaries/
+.idea/inspectionProfiles/
+.idea/markdown-navigator-enh.xml
+.idea/markdown-navigator.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/movigrama.iml
+.idea/other.xml
+.idea/sqldialects.xml
+.idea/vcs.xml
+Pipfile.lock
