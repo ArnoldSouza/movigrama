@@ -2,7 +2,7 @@
 
 A python module to help create plots of inventory in TOTVS ERP
 
-#### Setup the project:
+#### Setup the project for windows users
 
 To properly setup, it's necessary to create a INI 
 file named `app_config.ini` with structure like 
